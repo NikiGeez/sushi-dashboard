@@ -1,4 +1,5 @@
 import App from '@/App';
+import { ThemeProvider } from '@/context/theme';
 import i18n from '@/i18n';
 import 'normalize.css';
 import { StrictMode } from 'react';
@@ -11,9 +12,11 @@ const root = createRoot(container!);
 
 root.render(
   <StrictMode>
-    <BrowserRouter>
-      <Helmet titleTemplate={`%s - Sushi ${i18n.t('Dashboard')}`} />
-      <App />
-    </BrowserRouter>
+    <ThemeProvider>
+      <BrowserRouter>
+        <Helmet titleTemplate={`%s - Sushi ${i18n.t('Dashboard')}`} />
+        <App />
+      </BrowserRouter>
+    </ThemeProvider>
   </StrictMode>,
 );

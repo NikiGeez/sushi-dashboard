@@ -20,6 +20,18 @@ export const DARK_THEME = {
       fontWeight: 700,
       lineHeight: 1,
     },
+    h3: {
+      fontFamily: PRIMARY_FONT,
+      fontSize: '18px',
+      fontWeight: 700,
+      lineHeight: 1,
+    },
+    h5: {
+      fontFamily: PRIMARY_FONT,
+      fontSize: '14px',
+      fontWeight: 500,
+      lineHeight: '18px',
+    },
   },
   palette: {
     primary: {
@@ -32,5 +44,17 @@ export const DARK_THEME = {
       primary: '#DCDCDC',
       secondary: '#646464',
     },
+    border: {
+      main: '#212121',
+    },
+    skeleton: {
+      base: '#373A47',
+      highlight: '#9293A6',
+    }
   },
+  size: {
+    borderRadius: {
+      main: '12px',
+    },
+  }
 };

@@ -1,8 +1,8 @@
-import { TextAlignment, TextVariant } from '@/typings/ui';
+import { Customizable, TextAlignment, TextVariant } from '@/typings/ui';
 import styled from '@emotion/styled';
 import { FC, ReactNode } from 'react';
 
-export interface UiTextProps {
+export interface UiTextProps extends Customizable {
   children: ReactNode;
   variant?: TextVariant;
   paletteColor?: string;
@@ -10,8 +10,6 @@ export interface UiTextProps {
   align?: TextAlignment;
   noselect?: boolean;
   uppercase?: boolean;
-  className?: string;
-  style?: Record<string, string | number>;
 }
 
 export const UiText: FC<UiTextProps> = ({
@@ -22,6 +20,8 @@ export const UiText: FC<UiTextProps> = ({
   align,
   noselect = false,
   uppercase = false,
+  className = '',
+  style = {},
 }) => {
   return (
     <TextStyled
@@ -30,6 +30,8 @@ export const UiText: FC<UiTextProps> = ({
       align={align}
       noselect={noselect}
       uppercase={uppercase}
+      className={className}
+      style={{ ...style }}
     >
       {children}
     </TextStyled>

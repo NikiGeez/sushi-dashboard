@@ -1,18 +1,22 @@
-import { APP_THEME } from '@/constants/ui';
+import { useThemeContext } from '@/context/theme';
+import { Customizable } from '@/typings/ui';
 import { getObjectRoutes } from '@/utils/object';
 import styled from '@emotion/styled';
-import { FC, ReactNode } from 'react';
+import { FC, ReactNode, useEffect } from 'react';
+import 'react-loading-skeleton/dist/skeleton.css';
 import './global.scss';
 
-export interface UiAppProps {
+export interface UiAppProps extends Customizable {
   children: ReactNode;
-  className?: string;
-  style?: Record<string, string | number>;
 }
 
-injectCSSVariables(APP_THEME);
-
 export const UiApp: FC<UiAppProps> = ({ children, className = '', style = {} }) => {
+  const { theme } = useThemeContext();
+
+  useEffect(() => {
+    injectCSSVariables(theme);
+  }, [theme]);
+
   return (
     <WrapperStyled className={className} style={{ ...style }}>
       { children }

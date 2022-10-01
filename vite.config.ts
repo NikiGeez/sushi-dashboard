@@ -1,4 +1,5 @@
 import eslintPlugin from '@nabla/vite-plugin-eslint'
+import ViteRequireContext from '@originjs/vite-plugin-require-context'
 import react from '@vitejs/plugin-react'
 import * as path from 'path'
 import istanbul from 'rollup-plugin-istanbul'
@@ -16,6 +17,7 @@ export default defineConfig(({ mode }) => ({
   },
   plugins: [
     vitePluginRequire(),
+    ViteRequireContext(),
     tsconfigPaths(),
     react(),
     eslintPlugin(),

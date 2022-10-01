@@ -1,3 +1,4 @@
+import { TokenInfoCard } from '@/components/liquidity-pairs';
 import { UiText } from '@/components/ui';
 import styled from '@emotion/styled';
 import { FC } from 'react';
@@ -18,6 +19,11 @@ const Page: FC = () => {
             <UiText variant="h1">{t('FE Test exercise')}</UiText>
             <UiText paletteColor="text-secondary">{t('Good luck')} :)</UiText>
           </TitleStyled>
+
+          <GridStyled>
+            <TokenInfoCard />
+            <TokenInfoCard />
+          </GridStyled>
         </ContentStyled>
       </WrapperStyled>
     </>
@@ -42,6 +48,13 @@ const TitleStyled = styled.div`
   gap: 8px;
   align-items: flex-end;
   padding: 0 16px;
+  margin-bottom: 24px;
+`;
+
+const GridStyled = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 12px 20px;
 `;
 
 export default Page;
