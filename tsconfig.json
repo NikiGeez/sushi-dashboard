@@ -2,7 +2,6 @@
   "extends": "./tsconfig.alias.json",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
-		"baseUrl": "src",
 		"forceConsistentCasingInFileNames": true,
 		"isolatedModules": true,
 		"jsx": "react-jsx",

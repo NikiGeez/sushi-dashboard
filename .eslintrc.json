@@ -1,9 +1,5 @@
 {
-  "extends": [
-    "plugin:react/recommended",
-    "plugin:jsx-a11y/recommended",
-    "./.eslintrc.base.json"
-  ],
+  "extends": ["plugin:react/recommended", "plugin:jsx-a11y/recommended", "./.eslintrc.base.json"],
   "settings": {
     "react": {
       "version": "detect"
@@ -12,10 +8,7 @@
   "env": {
     "browser": true
   },
-  "plugins": [
-    "react-hooks",
-    "react-prefer-function-component"
-  ],
+  "plugins": ["react-hooks", "react-prefer-function-component"],
   "rules": {
     "react/react-in-jsx-scope": "off",
     "react-hooks/rules-of-hooks": "error",
@@ -23,6 +16,7 @@
     "react/prop-types": "off",
     "react/display-name": "off",
     "comma-dangle": "off",
-    "@typescript-eslint/ban-ts-comment": "off"
+    "@typescript-eslint/ban-ts-comment": "off",
+    "@typescript-eslint/indent": "off"
   }
 }
