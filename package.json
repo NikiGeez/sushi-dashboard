@@ -51,6 +51,7 @@
 		"start-server-and-test": "1.14.0",
 		"typescript": "4.4.4",
 		"vite": "2.6.13",
+		"vite-plugin-require": "^1.0.5",
 		"vite-tsconfig-paths": "3.3.17",
 		"workbox-build": "6.3.0",
 		"workbox-window": "6.3.0"
