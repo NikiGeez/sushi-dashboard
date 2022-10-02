@@ -53,13 +53,13 @@ const TextStyled = styled.span<{
     color: ${color};
 
     ${
-      align
-        ? `
+  align
+    ? `
       text-align: ${align};
       display: block;
     `
-        : ''
-    }
+    : ''
+}
 
     ${noselect ? 'user-select: none;' : ''}
     ${uppercase ? 'text-transform: uppercase;' : ''}

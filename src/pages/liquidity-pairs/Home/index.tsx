@@ -1,4 +1,4 @@
-import { TokenInfoCard } from '@/components/liquidity-pairs';
+import { LiquidityChart, TokenInfoCard, VolumeChart } from '@/components/liquidity-pairs';
 import { UiText } from '@/components/ui';
 import styled from '@emotion/styled';
 import { FC } from 'react';
@@ -23,6 +23,9 @@ const Page: FC = () => {
           <GridStyled>
             <TokenInfoCard />
             <TokenInfoCard />
+
+            <LiquidityChart />
+            <VolumeChart />
           </GridStyled>
         </ContentStyled>
       </WrapperStyled>
@@ -32,7 +35,7 @@ const Page: FC = () => {
 
 const WrapperStyled = styled.div`
   min-height: 100vh;
-  padding: 80px 160px;
+  padding: 80px;
   box-sizing: border-box;
   display: flex;
 `;

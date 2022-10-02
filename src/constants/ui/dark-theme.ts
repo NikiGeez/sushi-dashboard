@@ -37,6 +37,9 @@ export const DARK_THEME = {
     primary: {
       main: '#5294FF',
     },
+    grey: {
+      100: '#8D97A0',
+    },
     bg: {
       default: '#000000',
     },
