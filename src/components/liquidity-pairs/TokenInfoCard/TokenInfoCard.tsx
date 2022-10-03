@@ -1,15 +1,34 @@
 import { UiSkeleton, UiText } from '@/components/ui';
+import { DEFAULT_DECIMALS } from '@/constants/app';
+import { PairVitals } from '@/typings/liquidity-pairs';
 import { Customizable } from '@/typings/ui';
+import { formatNumber } from '@/utils/format';
 import { getTokenIcon } from '@/utils/tokens';
 import styled from '@emotion/styled';
-import { FC } from 'react';
+import { FC, useMemo } from 'react';
 
 export interface TokenInfoCardProps extends Customizable {
+  pair: PairVitals | null;
+  targetToken: 0 | 1;
   loading?: boolean;
+  amountDecimals?: number;
+  priceDecimals?: number;
 }
 
-export const TokenInfoCard: FC<TokenInfoCardProps> = ({ loading = false }) => {
-  const icon = getTokenIcon('WETH');
+export const TokenInfoCard: FC<TokenInfoCardProps> = ({
+  pair,
+  targetToken,
+  loading = false,
+  amountDecimals = 0,
+  priceDecimals = 1,
+}) => {
+  const tokenTicker = useMemo(() => pair?.[`token${targetToken}`]?.symbol || '$COIN', [pair, targetToken]);
+  const tokensAmount = useMemo(() => pair?.[`reserve${targetToken}`] || '0', [pair, targetToken]);
+  const priceInOppositeToken = useMemo(() => pair?.[`token${targetToken ? 0 : 1}Price`] || '0', [pair, targetToken]);
+  const oppositeTokenTicker = useMemo(() => pair?.[`token${targetToken ? 0 : 1}`]?.symbol || '$COIN', [pair, targetToken]);
+  const tokenPriceUSD = useMemo(() => pair?.liquidityPositionSnapshots[0]?.[`token${targetToken}PriceUSD`] || '0', [pair, targetToken]);
+
+  const icon = useMemo(() => getTokenIcon(tokenTicker), [tokenTicker]);
 
   return (
     <WrapperStyled>
@@ -26,10 +45,10 @@ export const TokenInfoCard: FC<TokenInfoCardProps> = ({ loading = false }) => {
               <IconStyled src={icon} alt="" />
             </IconContainerStyled>
             <UiText variant="h3">
-              {'6,978'}
+              {formatNumber(tokensAmount, amountDecimals)}
             </UiText>
             <UiText paletteColor="text-secondary">
-              {'WBTC'}
+              {tokenTicker}
             </UiText>
           </>
         )}
@@ -43,10 +62,10 @@ export const TokenInfoCard: FC<TokenInfoCardProps> = ({ loading = false }) => {
         ) : (
           <>
             <UiText variant="h5">
-              1 {'WBTC'} = {'14.6'} {'WETH'}
+              1 {tokenTicker} = {formatNumber(priceInOppositeToken, priceDecimals)} {oppositeTokenTicker}
             </UiText>
             <UiText paletteColor="text-secondary">
-              (${'38,471.89'})
+              (${formatNumber(tokenPriceUSD, DEFAULT_DECIMALS)})
             </UiText>
           </>
         )}

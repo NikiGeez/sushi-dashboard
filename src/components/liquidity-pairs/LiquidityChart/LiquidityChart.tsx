@@ -1,38 +1,43 @@
+import { GetLiquidityDaily, GetLiquidityDailyData, GetLiquidityDailyVars } from '@/api/graphql/sushi-exchange';
 import { UiAreaChart, UiSkeleton, UiText } from '@/components/ui';
+import { DEFAULT_DECIMALS } from '@/constants/app';
+import { TimeRange } from '@/typings/ui';
+import { cutDecimals, formatNumber } from '@/utils/format';
+import { useQuery } from '@apollo/client';
 import styled from '@emotion/styled';
 import dayjs from 'dayjs';
-import { FC, useMemo } from 'react';
+import { FC, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-export const LiquidityChart: FC = () => {
+export interface LiquidityChartProps {
+  pairId: string;
+}
+
+export const LiquidityChart: FC<LiquidityChartProps> = ({ pairId }) => {
   const { t } = useTranslation();
+  const [chartTimeRange, setChartTimeRange] = useState<TimeRange>('1M');
 
-  const loading = false;
+  const amountRecordsToFetch = useMemo(() => {
+    if (chartTimeRange === '1W') return 7;
+    if (chartTimeRange === '1M') return 31;
+    return 365;
+  }, [chartTimeRange])
 
-  const data: [number, number][] = [
-    [1327359600000, 30.95],
-    [1327446000000, 31.34],
-    [1327532400000, 31.18],
-    [1327618800000, 31.05],
-    [1327878000000, 31.0],
-    [1327964400000, 30.95],
-    [1328050800000, 31.24],
-    [1328137200000, 31.29],
-    [1328223600000, 31.85],
-    [1328482800000, 31.86],
-    [1328569200000, 32.28],
-    [1328655600000, 32.1],
-    [1328742000000, 32.65],
-    [1328828400000, 32.21],
-    [1329087600000, 32.35],
-    [1329174000000, 32.44],
-    [1329260400000, 32.46],
-    [1329346800000, 32.86],
-    [1329433200000, 32.75],
-    [1329778800000, 32.54],
-    [1329865200000, 32.33],
-    [1329951600000, 32.97]
-  ];
+  const {
+    loading,
+    data: chartDataResponse = null,
+  } = useQuery<GetLiquidityDailyData, GetLiquidityDailyVars>(GetLiquidityDaily, {
+    variables: { pairId, amount: amountRecordsToFetch },
+    fetchPolicy: 'cache-first',
+    nextFetchPolicy: 'cache-first',
+  });
+
+  const data = useMemo<[number, number][]>(() => {
+    if (!chartDataResponse) return [];
+    return chartDataResponse.pair.dayData.map((record) => {
+      return [record.date * 1000, Number(cutDecimals(record.reserveUSD, DEFAULT_DECIMALS))];
+    }).reverse() as [number, number][];
+  }, [chartDataResponse]);
 
   const displayedLiquidityUSD = useMemo(() => data[data.length - 1]?.[1] || 0, [data]);
   const displayedDate = useMemo(() => {
@@ -43,10 +48,13 @@ export const LiquidityChart: FC = () => {
   return (
     <UiAreaChart
       data={data}
+      manualRange={chartTimeRange}
+      rangesMode="manual"
+      onRangeChange={(range) => setChartTimeRange(range)}
       loading={loading}
       color="#14A887"
       tooltipLabel={t('Liquidity')}
-      tooltipValue={(v) => `${v}$`}
+      tooltipValue={(v) => `${formatNumber(v, DEFAULT_DECIMALS)}$`}
     >
       <ContentStyled>
         <HeaderStyled>
@@ -65,7 +73,7 @@ export const LiquidityChart: FC = () => {
         <div>
           {loading
             ? <UiSkeleton width="145px" height="18px" borderRadius="4px" />
-            : <UiText variant="h3">${displayedLiquidityUSD}</UiText>
+            : <UiText variant="h3">${formatNumber(displayedLiquidityUSD, DEFAULT_DECIMALS)}</UiText>
           }
         </div>
       </ContentStyled>

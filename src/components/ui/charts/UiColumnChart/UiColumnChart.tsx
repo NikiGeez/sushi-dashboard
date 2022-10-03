@@ -28,7 +28,7 @@ export interface UiColumnChartProps {
   alternativeColor?: string;
   gradientColor?: string;
 
-  rangesMode?: 'manual' | 'auto';
+  rangesMode?: 'manual' | 'auto' | 'combined';
   disableRanges?: boolean;
   whitelistedRanges?: TimeRange[];
   manualRange?: TimeRange;
@@ -98,7 +98,7 @@ export const UiColumnChart: FC<UiColumnChartProps> = ({
   const loadingMessageBgColor = new Color(chartBackground).fade(0.6).hexa();
 
   useEffect(() => {
-    if (rangesMode === 'auto' && data.length) {
+    if (['auto', 'combined'].includes(rangesMode) && data.length) {
       changeRangeZoom(chartId, currentRange, data[0].x, data[data.length - 1].x);
     }
   }, [currentRange, data]);

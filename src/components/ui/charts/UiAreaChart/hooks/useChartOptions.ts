@@ -171,7 +171,7 @@ function getRangeDateLabelFormatting(range: TimeRange) {
       resultFormatting = {
         ...resultFormatting,
         year: '',
-        month: '',
+        month: 'dd ddd',
         day: 'dd ddd',
         hour: '',
       };

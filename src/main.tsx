@@ -1,6 +1,8 @@
+import { GraphqlClient } from '@/api/graphql/sushi-exchange';
 import App from '@/App';
 import { ThemeProvider } from '@/context/theme';
 import i18n from '@/i18n';
+import { ApolloProvider } from '@apollo/client';
 import 'normalize.css';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
@@ -12,11 +14,13 @@ const root = createRoot(container!);
 
 root.render(
   <StrictMode>
-    <ThemeProvider>
-      <BrowserRouter>
-        <Helmet titleTemplate={`%s - Sushi ${i18n.t('Dashboard')}`} />
-        <App />
-      </BrowserRouter>
-    </ThemeProvider>
+    <ApolloProvider client={GraphqlClient}>
+      <ThemeProvider>
+        <BrowserRouter>
+          <Helmet titleTemplate={`%s - Sushi ${i18n.t('Dashboard')}`} />
+          <App />
+        </BrowserRouter>
+      </ThemeProvider>
+    </ApolloProvider>
   </StrictMode>,
 );

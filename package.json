@@ -20,11 +20,14 @@
 		"lint-staged": "lint-staged"
 	},
 	"dependencies": {
+		"@apollo/client": "^3.7.0",
 		"@emotion/react": "^11.10.4",
 		"@emotion/styled": "^11.10.4",
 		"apexcharts": "^3.35.5",
 		"color": "^4.2.3",
 		"dayjs": "^1.11.5",
+		"graphql": "^16.6.0",
+		"graphql-tag": "^2.12.6",
 		"i18next": "^21.9.2",
 		"normalize.css": "^8.0.1",
 		"react": "^18.2.0",
