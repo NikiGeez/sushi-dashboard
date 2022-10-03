@@ -7,7 +7,7 @@ import 'normalize.css';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { Helmet } from 'react-helmet';
-import { BrowserRouter } from 'react-router-dom';
+import { HashRouter } from 'react-router-dom';
 
 const container = document.getElementById('root');
 const root = createRoot(container!);
@@ -16,10 +16,10 @@ root.render(
   <StrictMode>
     <ApolloProvider client={GraphqlClient}>
       <ThemeProvider>
-        <BrowserRouter>
+        <HashRouter>
           <Helmet titleTemplate={`%s - Sushi ${i18n.t('Dashboard')}`} />
           <App />
-        </BrowserRouter>
+        </HashRouter>
       </ThemeProvider>
     </ApolloProvider>
   </StrictMode>,
